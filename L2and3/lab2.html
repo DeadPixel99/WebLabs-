@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clock</title>
+</head>
+<body>
+<div class="clock">
+    <div class="outer-clock-face">
+        <div class="marking marking-one"></div>
+        <div class="marking marking-two"></div>
+        <div class="marking marking-three"></div>
+        <div class="marking marking-four"></div>
+        <div class="inner-clock-face">
+            <div class="hand hour-hand"></div>
+            <div class="hand min-hand"></div>
+            <div class="hand second-hand"></div>
+        </div>
+    </div>
+    <ul class="clock-list">
+
+    </ul>
+    <div class="input-block">
+        <input type="time"/>
+        <input type="date"/>
+        <button>Add clock</button>
+    </div>
+</div>
+</body>
+<style>
+    @keyframes alert {
+        0% {background-color: white}
+        50% {background-color: rgba(214, 44, 44, 0.3)}
+        100% {background-color: white}
+    }
+
+    @keyframes onButton {
+        from {background-color: rgba(118, 255, 100, 0.4)}
+        to {background-color: rgba(118, 255, 100, 1)}
+    }
+
+    @keyframes popUpApper {
+        0% {transform: translateY(300px)}
+        50% {transform: translateY(-50px)}
+        80% {transform: translateY(20px)}
+        100% {transform: translateY(0)}
+    }
+
+
+    .pop-up {
+        position: fixed;
+        background-color: #ff646e;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 7px;
+        width: 150px;
+        height: 50px;
+        right: 5%;
+        bottom: 5%;
+        font: 1rem Arial, Helvetica, sans-serif;
+        text-align: center;
+        padding: 25px;
+    }
+
+    .clock-list {
+        margin: 35px 10px 10px 10px;
+        height: 20%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        list-style: none;
+        text-align: center;
+        padding: 0;
+	fonst-size: 2rem;
+    }
+
+    .clock-list li {
+        cursor: pointer;
+    }
+
+    .clock-list li:hover {
+        color: red;
+    }
+
+    .clock-list::-webkit-scrollbar {
+        width: 2px;
+        background-color: rgba(0,0,0,0.1);
+    }
+
+    .clock-list::-webkit-scrollbar-thumb {
+        width: 3px;
+        height: 2px;
+        border-radius: 2px;
+        background-color: rgba(0, 190, 251, 0.5);
+    }
+
+
+    .input-block * {
+        flex-basis: 70px;
+        flex-shrink: 0;
+        background-color: rgba(0,0,0,0);
+    }
+
+    .input-block *:focus {
+        outline: none;
+    }
+    /*add date btn*/
+    .input-block :last-child {
+        border: 1px solid rgba(0,0,0,0.1);
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+        background-color: rgba(118, 255, 100, 0.4);
+    }
+
+    .input-block :last-child:hover {
+        animation: onButton 0.5s;
+        background-color: rgba(118, 255, 100, 1)
+    }
+
+    .input-block :first-child {
+        border: 1px solid rgba(0,0,0,0.1);
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+    .input-block input[type="date"] {
+        border: 1px solid rgba(0,0,0,0.1);
+        flex-basis: 150px;
+        border-left: none;
+        border-right: none;
+    }
+
+    .input-block {
+        display: flex;
+        justify-content: center;
+    }
+
+    .clock {
+        width: 23rem;
+        height: 23rem;
+	padding: 10px;
+        border: 7px solid #545271;
+        border-radius: 50%;
+        margin: 50px auto;
+        position: relative;
+        -webkit-box-shadow: 0 20px 30px rgba(104,75,106,0.65);
+        -moz-box-shadow: 0 20px 30px rgba(104,75,106,0.65);
+        box-shadow: 0 20px 30px rgba(104,75,106,0.65);
+        background: #545271;
+    }
+
+
+    .outer-clock-face {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        background: #fefefc;
+        -webkit-box-shadow: 0 20px 10px rgba(62,47,63,0.45);
+        -moz-box-shadow: 0 20px 10px rgba(62,47,63,0.45);
+        box-shadow: 0 20px 10px rgba(62,47,63,0.45);
+        overflow: hidden;
+    }
+
+    .outer-clock-face::after {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        transform: rotate(90deg)
+    }
+
+    .outer-clock-face::before,
+    .outer-clock-face::after,
+    .outer-clock-face .marking{
+        content: '';
+        position: absolute;
+        width: 6px;
+        height: 100%;
+        background: #b8b8c5;
+        z-index: 0;
+        left: 49%;
+    }
+
+    .outer-clock-face .marking {
+        background: #bdbdcb;
+        width: 3px;
+    }
+
+    .outer-clock-face .marking.marking-one {
+        -webkit-transform: rotate(30deg);
+        -moz-transform: rotate(30deg);
+        transform: rotate(30deg)
+    }
+
+    .outer-clock-face .marking.marking-two {
+        -webkit-transform: rotate(60deg);
+        -moz-transform: rotate(60deg);
+        transform: rotate(60deg)
+    }
+
+    .outer-clock-face .marking.marking-three {
+        -webkit-transform: rotate(120deg);
+        -moz-transform: rotate(120deg);
+        transform: rotate(120deg)
+    }
+
+    .outer-clock-face .marking.marking-four {
+        -webkit-transform: rotate(150deg);
+        -moz-transform: rotate(150deg);
+        transform: rotate(150deg)
+    }
+
+    .inner-clock-face {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
+        background: #fefefc;
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        border-radius: 100%;
+        z-index: 1;
+    }
+
+    .inner-clock-face::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 16px;
+        height: 16px;
+        border-radius: 18px;
+        margin-left: -9px;
+        margin-top: -6px;
+        background: #4d4b63;
+        z-index: 11;
+    }
+
+    .hand {
+        width: 50%;
+        right: 50%;
+        height: 6px;
+        background: #61afff;
+        position: absolute;
+        top: 50%;
+        border-radius: 6px;
+        transform-origin: 100%;
+        transform: rotate(90deg);
+        transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    }
+
+    .hand.hour-hand {
+        width: 20%;
+        z-index: 3;
+    }
+
+    .hand.min-hand {
+        height: 3px;
+        z-index: 10;
+        width: 35%;
+    }
+
+    .hand.second-hand {
+        background: #ff5e5e;
+        width: 40%;
+    }
+</style>
+<script>
+    (function () {
+
+        const addClockBtn = document.querySelector('.input-block button');
+        const clockList = document.querySelector('.clock-list');
+        let popUpStatus = false;
+        let clocks = {};
+
+        function setTimer(hours, minutes, year, month, day) {
+            let currentDate = new Date();
+            let clock = document.createElement('li');
+            if(!day || day < currentDate.getDate())
+                day = currentDate.getDate();
+            if(!month || month-1 < currentDate.getMonth())
+                month = currentDate.getMonth()+1;
+            if(!year || year < currentDate.getFullYear())
+                year = currentDate.getFullYear();
+            if(!hours || !minutes) {
+                popUp('Error! \n Time must be set');
+                return;
+            }
+            if(hours <= currentDate.getHours() && minutes <= currentDate.getMinutes() && day == currentDate.getDate()) {
+                popUp('Error! \n Time travels is forbidden');
+                return;
+            }
+            let futureDate = new Date(year, month-1, day, hours, minutes);
+            let timeInfo = `${hours},${minutes},${year},${month},${day}`;
+            clocks[futureDate.getTime()] = setTimeout(alarm, futureDate.getTime() -  currentDate.getTime());
+            clock.setAttribute('timestamp', futureDate.getTime());
+            clock.setAttribute('timeInfo', timeInfo);
+            clock.innerHTML = `${futureDate.toDateString()} at ${hours}:${minutes}`;
+            clock.addEventListener('click', removeClock);
+            clockList.appendChild(clock);
+            AJAX('task=addclock&time=' + timeInfo);
+        }
+
+
+
+        function alarm() {
+            let sound = new Audio('./alarm.mp3');
+            sound.loop = true;
+            sound.play();
+            document.body.style.animation = "alert 1s infinite";
+            popUp('Wake up!');
+            document.querySelector(`li[timestamp='${Math.min(...Object.keys(clocks))}']`).remove();
+            function cancelAlarm() {
+                sound.pause();
+                sound.currentTime = 0;
+                document.body.style.animation = 'none';
+            }
+            return document.addEventListener('click',cancelAlarm);
+        }
+
+        function addClock() {
+            let time = document.querySelector('.input-block input[type="time"]');
+            let date = document.querySelector('.input-block input[type="date"]');
+            let arg = time.value.split(':').concat(date.value.split('-'));
+            setTimer.apply(this, arg);
+        }
+
+        function removeClock(e) {
+            clearTimeout(clocks[e.target.getAttribute('timestamp')]);
+            AJAX('task=rmclock&time=' + e.target.getAttribute('timeinfo'));
+            clockList.removeChild(e.target);
+            delete clocks[e.target.getAttribute('timestamp')];
+        }
+
+
+
+        function setClock() {
+
+            function setDate() {
+                const secondHand = document.querySelector('.second-hand');
+                const minsHand = document.querySelector('.min-hand');
+                const hourHand = document.querySelector('.hour-hand');
+
+                if(secondHand) {
+                    const now = new Date();
+
+                    const seconds = now.getSeconds();
+                    const secondsDegrees = ((seconds / 60) * 360) + 90;
+                    secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+                    const mins = now.getMinutes();
+                    const minsDegrees = ((mins / 60) * 360) + ((seconds/60)*6) + 90;
+                    minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+                    const hour = now.getHours();
+                    const hourDegrees = ((hour / 12) * 360) + ((mins/60)*30) + 90;
+                    hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+                }
+            }
+            return setInterval(setDate, 1000);
+        }
+
+        function AJAX(parametersQuery) {
+            return new Promise(resolve => {
+               let xhr = new XMLHttpRequest();
+               xhr.open('GET', 'http://localhost:1337/api?' + parametersQuery);
+               xhr.onreadystatechange = ()=>{
+                   if(xhr.readyState == 4)
+                       resolve(xhr.responseText)
+               };
+               xhr.send(null)
+            });
+        }
+
+        function popUp(msg) {
+            if(popUpStatus)
+                return;
+            popUpStatus = true;
+            let pu = document.createElement('p');
+            pu.innerText = msg;
+            pu.classList.add('pop-up');
+            pu.style.animation = 'popUpApper 1s';
+            document.body.appendChild(pu);
+            setTimeout(()=>{pu.style.animation = ''}, 1200);
+            setTimeout(()=>{
+                pu.animation = 'none';
+                pu.style.animation = 'popUpApper 1s reverse';
+            }, 2000);
+            setTimeout(()=>{document.body.removeChild(pu); popUpStatus = false; }, 2900);
+        }
+
+        AJAX('task=clientInit').then(res=>{
+            res.split(';').forEach(d=>{
+                setTimer.apply(null, d.split(','));
+            })
+        });
+
+        addClockBtn.addEventListener('click', addClock);
+
+        return setClock();
+    })();
+</script>
+</html>
